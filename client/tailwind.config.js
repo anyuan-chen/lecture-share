@@ -3,7 +3,12 @@ module.exports = {
 
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        logo: '"Sansita", Helvitica, Arial, sans-serif',
+        sans: 'Roboto, Helvetica, Arial',
+      },
+    },
   },
   variants: {
     extend: {},
