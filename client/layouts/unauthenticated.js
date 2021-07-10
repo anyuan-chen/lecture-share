@@ -1,8 +1,13 @@
 import Link from "next/link";
+import Head from "next/head";
 export default function Unauthenticated({ children }) {
   return (
     <div>
-      <main>
+      <Head>
+        <title>Home</title>
+        <link rel="icon" href="/favicon.ico"></link>
+      </Head>
+      <header>
         <nav className="border-b-2 border-gray-100">
           <ul className="flex flex-row justify-between items-end py-5">
             <li>
@@ -33,9 +38,11 @@ export default function Unauthenticated({ children }) {
             </li>
           </ul>
         </nav>
-        {children}
-      </main>
-      <footer></footer>
+      </header>
+      <main>{children}</main>
+      <footer className="border-t-2 border-gray-100">
+          
+      </footer>
     </div>
   );
 }
