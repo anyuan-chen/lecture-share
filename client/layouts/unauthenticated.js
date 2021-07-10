@@ -40,7 +40,7 @@ export default function Unauthenticated({ children }) {
         </nav>
       </header>
       <main>{children}</main>
-      <footer className="border-t-2 border-gray-100">
+      <footer className="border-t-2 border-gray-100 pt-10">
           
       </footer>
     </div>

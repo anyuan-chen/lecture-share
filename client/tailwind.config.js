@@ -6,12 +6,12 @@ module.exports = {
     extend: {
       fontFamily: {
         logo: '"Sansita", Helvitica, Arial, sans-serif',
-        sans: 'Roboto, Helvetica, Arial',
+        sans: "Roboto, Helvetica, Arial",
       },
     },
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };

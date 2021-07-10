@@ -6,30 +6,55 @@ export default function Login() {
     event.preventDefault();
     console.log("hi! this function is running");
   };
-  const [email, setEmail] = useState("name@example.com");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm, setconfirm] = useState("");
-  const emailChanged = (event) => {};
-  const passwordChanged = (event) => {};
-  const confirmChanged = (event) => {};
+  const [confirm, setConfirm] = useState("");
+  const emailChanged = (event) => {
+    setEmail(event.target.value);
+  };
+  const passwordChanged = (event) => {
+    setPassword(event.target.value);
+  };
+  const confirmChanged = (event) => {
+    setConfirm(event.target.value);
+  };
   return (
     <Unauthenticated>
-      <h1>Login</h1>
-      <form onSubmit={login}>
-        <label>
-          Email:
-          <input type="text" value={email} onChange={emailChanged} />
-        </label>
-        <label>
-          Password:
-          <input type="password" value={password} onChange={passwordChanged} />
-        </label>
-        <label>
-          Confirm Password:
-          <input type="password" value={confirm} onChange={confirmChanged} />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
+      <div className="flex flex-col items-center">
+        <div>
+          <h1 className="font-sans font-semibold text-5xl py-5">Login</h1>
+          <form onSubmit={login} className="flex flex-col space-y-4">
+            <div className="flex flex-col">
+              <label>Email Address</label>
+              <input
+                type="text"
+                value={email}
+                onChange={emailChanged}
+                className="border-gray-300 rounded w-96"
+              />
+            </div>
+            <label className="flex flex-col">
+              Password
+              <input
+                type="password"
+                value={password}
+                onChange={passwordChanged}
+                className="border-gray-300 rounded w-96"
+              />
+            </label>
+            <label className="flex flex-col">
+              Confirm Password
+              <input
+                type="password"
+                value={confirm}
+                onChange={confirmChanged}
+                className="border-gray-300 rounded w-96"
+              />
+            </label>
+            <button type="submit" className="py-3 bg-purple-500 rounded text-white">Submit</button>
+          </form>
+        </div>
+      </div>
     </Unauthenticated>
   );
 }
