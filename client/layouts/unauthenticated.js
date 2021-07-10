@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Head from "next/head";
-export default function Unauthenticated({ children }) {
+export default function Unauthenticated({ children, ...props }, ) {
   return (
     <div>
       <Head>
-        <title>Home</title>
+        <title>{props.title}</title>
         <link rel="icon" href="/favicon.ico"></link>
       </Head>
       <header>
@@ -39,10 +39,8 @@ export default function Unauthenticated({ children }) {
           </ul>
         </nav>
       </header>
-      <main>{children}</main>
-      <footer className="border-t-2 border-gray-100 pt-10">
-          
-      </footer>
+      <main className="pb-10">{children}</main>
+      <footer className="border-t-2 border-gray-100 pt-10"></footer>
     </div>
   );
 }

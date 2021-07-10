@@ -8,18 +8,15 @@ export default function Login() {
   };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
   const emailChanged = (event) => {
     setEmail(event.target.value);
   };
   const passwordChanged = (event) => {
     setPassword(event.target.value);
   };
-  const confirmChanged = (event) => {
-    setConfirm(event.target.value);
-  };
+
   return (
-    <Unauthenticated>
+    <Unauthenticated title="Log In">
       <div className="flex flex-col items-center">
         <div>
           <h1 className="font-sans font-semibold text-5xl py-5">Login</h1>
@@ -42,16 +39,12 @@ export default function Login() {
                 className="border-gray-300 rounded w-96"
               />
             </label>
-            <label className="flex flex-col">
-              Confirm Password
-              <input
-                type="password"
-                value={confirm}
-                onChange={confirmChanged}
-                className="border-gray-300 rounded w-96"
-              />
-            </label>
-            <button type="submit" className="py-3 bg-purple-500 rounded text-white">Submit</button>
+            <button
+              type="submit"
+              className="py-3 bg-purple-500 rounded text-white"
+            >
+              Submit
+            </button>
           </form>
         </div>
       </div>
