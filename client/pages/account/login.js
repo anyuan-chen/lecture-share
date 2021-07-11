@@ -1,10 +1,32 @@
 import React, { useState } from "react";
 import Unauthenticated from "../../layouts/unauthenticated";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useAppContext } from "../../context/state";
 
 export default function Login() {
-  const login = (event) => {
+  const authStatus = store.getState();
+  const router = useRouter();
+  const appContext = useAppContext();
+  const login = async (event) => {
     event.preventDefault();
-    console.log("hi! this function is running");
+    const body = { email, password };
+    try {
+      const response = await fetch("http://localhost:5000/account/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const parseRes = await response.json();
+      if (parseRes.token) {
+        localStorage.setItem("token", parseRes.token);
+        
+      } else {
+        
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
   };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +36,12 @@ export default function Login() {
   const passwordChanged = (event) => {
     setPassword(event.target.value);
   };
+
+  useEffect(() => {
+    if (store.getState() == true) {
+      router.push("/");
+    }
+  }, [authStatus, router]);
 
   return (
     <Unauthenticated title="Log In">

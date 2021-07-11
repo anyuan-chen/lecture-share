@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Unauthenticated from "../../layouts/unauthenticated";
 
 export default function Register() {
-  const login = (event) => {
+  const register = (event) => {
     event.preventDefault();
     console.log("hi! this function is running");
   };
