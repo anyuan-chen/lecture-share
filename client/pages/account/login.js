@@ -2,32 +2,14 @@ import React, { useState } from "react";
 import Unauthenticated from "../../layouts/unauthenticated";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useAppContext } from "../../context/state";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "../../actions/actions";
 
 export default function Login() {
-  const authStatus = store.getState();
+  const authStatus = useSelector((state) => state.authStatus);
+  const dispatch = useDispatch();
+
   const router = useRouter();
-  const appContext = useAppContext();
-  const login = async (event) => {
-    event.preventDefault();
-    const body = { email, password };
-    try {
-      const response = await fetch("http://localhost:5000/account/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      const parseRes = await response.json();
-      if (parseRes.token) {
-        localStorage.setItem("token", parseRes.token);
-        
-      } else {
-        
-      }
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const emailChanged = (event) => {
@@ -38,17 +20,43 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (store.getState() == true) {
+    if (authStatus === true) {
       router.push("/");
     }
   }, [authStatus, router]);
 
+  const log = async (event) => {
+    event.preventDefault();
+    const body = { email, password };
+    console.log(event);
+    try {
+      const response = await fetch("http://localhost:5000/account/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const parseRes = await response.json();
+      if (parseRes.token) {
+        localStorage.setItem("token", parseRes.token);
+        dispatch(login());
+        console.log("hi bro");
+      } else {
+        dispatch(logout());
+        console.log(authStatus);
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
   return (
     <Unauthenticated title="Log In">
       <div className="flex flex-col items-center">
         <div>
           <h1 className="font-sans font-semibold text-5xl py-5">Login</h1>
-          <form onSubmit={login} className="flex flex-col space-y-4">
+          <form
+            onSubmit={(event) => log(event)}
+            className="flex flex-col space-y-4"
+          >
             <div className="flex flex-col">
               <label>Email Address</label>
               <input
