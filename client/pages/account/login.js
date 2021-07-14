@@ -48,7 +48,7 @@ export default function Login() {
 
   useEffect(() => {
     if (authStatus === true) {
-      router.push("/user/dashboard");
+      router.push("/user/youraccount");
     }
   }, [authStatus, router]);
 
