@@ -20,8 +20,35 @@ export default function Login() {
   };
 
   useEffect(() => {
+    const req = async () => {
+      const res = await fetch("http://localhost:5000/account/is-verify", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
+      });
+      const parseRes = await res.json();
+      if (parseRes.value){
+        return true;
+      }
+      
+      else{
+        localStorage.removeItem("token")
+        return false;
+      }
+    };
+    
+    if (localStorage.token){
+      if (req()){
+        dispatch(login())
+      }
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
     if (authStatus === true) {
-      router.push("/");
+      router.push("/user/dashboard");
     }
   }, [authStatus, router]);
 

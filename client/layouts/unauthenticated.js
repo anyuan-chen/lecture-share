@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Head from "next/head";
-export default function Unauthenticated({ children, ...props }, ) {
+export default function Unauthenticated({ children, ...props }) {
   return (
     <div>
       <Head>
@@ -31,9 +31,7 @@ export default function Unauthenticated({ children, ...props }, ) {
                     <a className="font-sans px-5 text-xl">Login</a>
                   </Link>
                 </li>
-                <li>
-                  <button className="font-sans px-5 text-xl">Logout</button>
-                </li>
+                
               </ul>
             </li>
           </ul>

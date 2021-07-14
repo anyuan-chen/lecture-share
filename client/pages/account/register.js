@@ -1,10 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Unauthenticated from "../../layouts/unauthenticated";
+import { useSelector, useDispatch } from "react-redux";
+import { login, logout } from "../../actions/actions";
+import router, { useRouter } from "next/router";
 
 export default function Register() {
-  const register = (event) => {
+  const dispatch = useDispatch();
+  const authStatus = useSelector((state) => state.authStatus);
+  const router = useRouter();
+  const register = async (event) => {
     event.preventDefault();
-    console.log("hi! this function is running");
+    console.log("kekw");
+    try {
+      const body = {
+        name,
+        email,
+        password,
+      };
+      const response = await fetch("http://localhost:5000/account/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const parseResponse = await response.json();
+      if (parseResponse.token) {
+        localStorage.setItem("token", parseResponse.token);
+        dispatch(login());
+      } else {
+        dispatch(logout());
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -22,12 +49,43 @@ export default function Register() {
   const nameChanged = (event) => {
     setName(event.target.value);
   };
+  useEffect(() => {
+    if (authStatus === true) {
+      router.push("/user/dashboard");
+    }
+  }, [authStatus, router]);
+
+  useEffect(() => {
+    const req = async () => {
+      const res = await fetch("http://localhost:5000/account/is-verify", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          token: localStorage.token,
+        },
+      });
+      const parseRes = await res.json();
+      if (parseRes.value) {
+        return true;
+      } else {
+        localStorage.removeItem("token");
+        return false;
+      }
+    };
+
+    if (localStorage.token) {
+      if (req()) {
+        dispatch(login());
+      }
+    }
+  }, [dispatch]);
+
   return (
     <Unauthenticated title="Register">
       <div className="flex flex-col items-center">
         <div>
           <h1 className="font-sans font-semibold text-5xl py-5">Register</h1>
-          <form onSubmit={login} className="flex flex-col space-y-4">
+          <form onSubmit={register} className="flex flex-col space-y-4">
             <label className="flex flex-col">
               Name
               <input
